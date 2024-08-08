@@ -1,0 +1,22 @@
+# https://github.com/astrale-sharp/wasm-minimal-protocol/blob/master/examples/hello_rust/Cargo.toml
+[package]
+name = "clatter"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+rxing = { version = "0.6.1", default-features = false, features = ["svg_write"], path = "../rxing" }
+svg = "0.17.0"
+wasm-minimal-protocol = { git = "https://github.com/astrale-sharp/wasm-minimal-protocol.git"}
+
+[profile.release]
+lto = true          # Enable link-time optimization
+strip = true        # Strip symbols from binary*
+opt-level = 'z'     # Optimize for size
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+panic = 'abort'     # Abort on panic
+
+[workspace] # so that it is not included in the upper workspace
