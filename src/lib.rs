@@ -30,18 +30,13 @@ pub fn pdf417(text: &[u8], width: &[u8], height: &[u8]) -> Vec<u8> {
     });
     let encoded = PDF417Writer::new()
         .encode_with_hints(
-            &str::from_utf8(text).expect("text is valid utf-8"),
+            str::from_utf8(text).expect("text is valid utf-8"),
             &BarcodeFormat::PDF_417,
             width as i32,
             height as i32,
-            &*hints,
+            &hints,
         )
         .expect("encoded");
     let svg: svg::Document = (&encoded).into();
     svg.to_string().as_bytes().to_vec()
-}
-
-#[wasm_func]
-pub fn hello() -> Vec<u8> {
-    b"Hello from wasm!!!".to_vec()
 }
